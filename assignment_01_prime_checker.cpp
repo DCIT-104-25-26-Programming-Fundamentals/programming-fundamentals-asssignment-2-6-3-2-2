@@ -35,5 +35,36 @@
 // =============================================================================
 
 #include <iostream>
+#include <string>
+#include <cmath>
 using namespace std;
 
+string isPrime (int number){
+    string result;
+    bool test{true};
+    if (number <=1){
+        test = false;
+    }else{
+        for (int i{2}; i <= sqrt(number); ++i){
+            if (number % i == 0){
+                test = false;
+                break;
+            }
+        }
+    }
+    if (test == true){
+        result = to_string(number)+" is a prime number.";
+    }else{
+        result = to_string(number)+" is NOT a prime number.";
+    }
+    return result;
+}
+int main(){
+    int myNumber;
+    cout << "Enter a number: ";
+    cin >> myNumber;
+    string result{isPrime(myNumber)};
+    cout << result << endl;
+    
+    return 0;
+}
