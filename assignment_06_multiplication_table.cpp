@@ -55,5 +55,52 @@
 // =============================================================================
 
 #include <iostream>
+#include <string>
 using namespace std;
 
+string single_mult_table(int num){
+     if (num<=0){
+          return "";
+     }
+     string multTable{"Multiplication table for "+to_string(num)+":\n"};
+     int product;
+     for (int i{1}; i<=12 ; i++){
+          product = i * num;
+          multTable += (to_string(num) + " × " + to_string(i) + " = " + to_string(product) + "\n");
+     }
+     return multTable;
+}
+
+string multiple_mult_table(int num){
+     if (num<=0){
+          return "";
+     }
+     string multTable;
+     int product;
+     for (int i{1}; i <= num;i++){
+          multTable += (string(30,'-')+("\nMultiplication table for ")+to_string(i)+(":\n")+string(30,'-')+("\n"));
+          for (int j{1}; j <= 12; j++){
+               product = i * j;
+               multTable += (to_string(i) + " × " + to_string(j) + " = " + to_string(product) + "\n");
+          }
+     }
+     return multTable;
+}
+               
+
+int main(){
+     int number;
+     cout<<"Enter a number for the multiplication table: ";
+     cin>>number;
+     if (single_mult_table(number).empty()){
+          cout<<"Error: A positive integer must be entered."<<endl;
+     }
+     cout<<single_mult_table(number)<<endl;
+     
+     cout<<"Enter a number: ";
+     cin>>number;
+     if (multiple_mult_table(number).empty()){
+          cout<<"Error: A positive integer must be entered."<<endl;
+     }
+     cout<<multiple_mult_table(number)<<endl;
+}
