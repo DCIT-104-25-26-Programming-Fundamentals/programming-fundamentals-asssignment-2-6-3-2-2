@@ -40,5 +40,66 @@
 // =============================================================================
 
 #include <iostream>
+#include <vector>
 using namespace std;
 
+int sum(vector<int> myVector){
+    int sum{0};
+    for (int i{0};i<myVector.size();i++){
+        sum += myVector[i];
+    }
+    return sum;
+}
+    
+float average(vector<int> myVector){
+    float total{static_cast<float>(sum(myVector))};
+    float arraySize{static_cast<float>(myVector.size())};
+    float average{total/arraySize};
+    
+    return average;
+}
+    
+int maximum(vector<int> myVector){
+    int maxVal{myVector[0]};
+    for (int i{0};i<myVector.size();i++){
+        if(maxVal < myVector[i]){
+            maxVal = myVector[i];
+        }else{
+            continue;
+        }
+    }
+    return maxVal;
+}
+
+int minimum(vector<int> myVector){
+    int minVal{myVector[0]};
+    for (int i{0};i<myVector.size();i++){
+        if(minVal > myVector[i]){
+            minVal = myVector[i];
+        }else{
+            continue;
+        }
+    }
+    return minVal;
+}
+
+int main(){
+    int listSize;
+    cout<<"How many numbers? ";
+    cin>>listSize;
+    if (listSize <= 0){
+        cout<<"Error: A positive integer must be entered."<<endl;
+        return 0;
+    }
+    vector<int> myVector(listSize);
+    for (int i{1}; i <= (listSize);i++){
+        cout<<"Enter number "<<i<<": ";
+        cin>>myVector[i-1];
+    }
+     cout<<"\nResults:"
+     <<"\nSum: "<<sum(myVector)
+     <<"\nAverage: "<<average(myVector)
+     <<"\nMaximum: "<<maximum(myVector)
+     <<"\nMinimum: "<<minimum(myVector)
+     <<endl;
+}
