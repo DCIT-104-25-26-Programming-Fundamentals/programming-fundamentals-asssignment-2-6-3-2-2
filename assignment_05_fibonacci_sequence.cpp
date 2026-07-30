@@ -49,5 +49,61 @@
 // =============================================================================
 
 #include <iostream>
+#include <vector>
+#include <string>
 using namespace std;
 
+vector<int> Fibonacci(int num){
+     vector<int> sequence{0,1};
+     if (num<=0){
+          return {};
+     }else if (num == 1) {
+          return vector<int> {0};
+     }else{
+          for (int i{2}; i<num; i++){
+               sequence.push_back(sequence[i-1]+sequence[i-2]);
+          }
+     }
+     return sequence;
+}
+
+bool isInFibonacci(int num){
+     vector<int> sequence{0,1};
+     bool test{true};
+     if (num<0){
+          test = false;
+     }else{
+          for (int i{2};sequence[sequence.size()-1] < num;i++){
+               sequence.push_back(sequence[i-1]+sequence[i-2]);
+          }
+     }
+     if (sequence.back() != num ){
+          test= false;
+     }
+     return test; 
+}
+
+int main(){
+     int seqSize;
+     cout<<"How many terms? ";
+     cin>>seqSize;
+     vector<int> sequence{Fibonacci(seqSize)};
+     if(sequence.empty()){
+          cout<<"Error: The number of terms must be a positive integer.";
+          return 0;
+     }
+     string seqStr{""};
+     for (int item: sequence){
+          seqStr+=(to_string(item)+" ");
+     }
+     cout<<"Fibonacci sequence: "<<seqStr<<endl;
+     
+     int num;
+     cout<<"Enter a number to check: ";
+     cin>>num;
+     if (isInFibonacci(num)){
+          cout<<num<<" is a Fibonacci number."<<endl;
+     }else{
+          cout<<num<<" is NOT a Fibonacci number."<<endl;
+     }
+}
