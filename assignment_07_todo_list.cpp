@@ -80,3 +80,85 @@
 #include <string>
 using namespace std;
 
+vector<string> addTask(vector<string> todolist){
+     string task;
+     cout<<"Enter task: ";
+     getline(cin>>ws,task);
+     todolist.push_back(task);
+     cout<<"Task added: '"<<task<<"'"<<endl;
+     return todolist;
+}
+
+string viewTasks(vector<string> todolist){
+     if(todolist.empty()){
+          cout<<"There are no tasks entered yet.";
+          return "";
+     }
+     string todoStr{"Your tasks:\n"};
+     for (int i{0}; i<todolist.size(); i++){
+          todoStr += (to_string(i+1) + ". " + todolist[i] + '\n');
+     }
+     return todoStr;
+}
+
+vector<string> delTask(vector<string> todolist){
+     if(todolist.empty()){
+          cout<<"There are no tasks entered yet.";
+          return todolist;
+     }
+     int taskNo;
+     cout<<"Enter task number to delete: ";
+     cin>>taskNo;
+     if (cin.fail() || taskNo<=0 || taskNo>todolist.size()) {
+          cout<<"Error: Invalid input.";
+          cin.clear();
+          cin.ignore(1000, '\n');
+          return todolist;
+     }
+     cout<<"Task '"<<todolist[taskNo-1]<<"' has been removed.";
+     todolist.erase(todolist.begin()+ taskNo-1);
+      return todolist;
+}
+
+void quit(){
+     cout<<"Goodbye!";
+}
+
+int main(){
+     vector<string> todolist;
+     cout<<string(30,'-')<<"\nTO-DO LIST MENU\n"<<string(30,'-')<<
+     "\n1. Add task\n2. View tasks\n3. Delete task\n4. Quit"<<endl;
+     while (true){
+          int option;
+          cout<<"\nEnter your choice (1-4): ";
+          cin>>option;
+          if (cin.fail()) {
+              cout << "Letters are not allowed.\n";
+              cin.clear();
+              cin.ignore(1000, '\n');
+              continue;
+          }
+          int size = todolist.size();
+          switch(option){
+               case 1:
+                    todolist = addTask(todolist);
+                    break;
+               case 2:
+                    cout<<viewTasks(todolist);
+                    break;
+               case 3:
+                    todolist = delTask(todolist);
+                    if (todolist.size() == size){
+                         continue;
+                    }
+                    break;
+               case 4:
+                    quit();
+                    return 0;
+               default:
+                    cout<<"Your input is invalid."<<endl;
+                    break;
+          }
+     }
+     return 0;
+}
