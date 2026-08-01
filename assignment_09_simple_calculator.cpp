@@ -73,3 +73,112 @@
 #include <cmath>
 using namespace std;
 
+void add(int num1,int num2){
+     int sum{num1 + num2};
+     cout<<"Result: "<<num1<<" + "<<num2<<" = "<<sum;
+}
+
+void subtract(int num1,int num2){
+     int diff{num1 - num2};
+     cout<<"Result: "<<num1<<" - "<<num2<<" = "<<diff;
+}
+
+void multiply(int num1,int num2){
+     int product{num1 * num2};
+     cout<<"Result: "<<num1<<" * "<<num2<<" = "<<product;
+}
+
+void divide(int num1,int num2){
+     if (num2 == 0){
+          cout<<"Error: Cannot divide by zero.";
+          return;
+     }
+     float div{static_cast<float>(num1) / static_cast<float>(num2)};
+     cout<<"Result: "<<num1<<" / "<<num2<<" = "<<fixed<<setprecision(2)<<div;
+}
+
+void modulo(int num1,int num2){
+     if (num2 == 0){
+          cout<<"Error: Cannot modulo by zero.";
+          return;
+     }
+     int mod{num1 % num2};
+     cout<<"Result: "<<num1<<" % "<<num2<<" = "<<mod;
+}
+
+void exponent(int num1,int num2){
+     double result{pow(num1, num2)};
+     cout<<"Result: "<<num1<<" ^ "<<num2<<" = "<<result;
+}
+void quit(){
+     cout<<"Goodbye!";
+}
+
+int main(){
+     cout<<string(40,'-')<<"\nSIMPLE CALCULATOR\n"<<string(40,'-')<<
+     "\n1. Addition\n2. Subtraction\n3. Multiplication\n4. Division\n5. Modulus\n6. Exponentiation\n7. Quit"<<endl;
+     
+     int operation;
+     int num1;
+     int num2;
+     while (true){
+          cout<<"\n\nSelect an operation (1-7): ";
+          cin>>operation;
+          if (cin.fail()){
+               cout<<"Error: Invalid menu choice.";
+               cin.clear();
+               cin.ignore(1000,'\n');
+               continue;
+          }else if(operation == 7){
+               quit();
+               return 0;
+          }else if(operation<1 || operation>7){
+               cout<<"Error: Invalid menu choice.";
+               cin.clear();
+               cin.ignore(1000,'\n');
+               continue;
+          }
+          
+          cout<<"Enter the first number: ";
+          cin>>num1;
+          if (cin.fail()){
+               cout<<"Error: Invalid input.";
+               cin.clear();
+               cin.ignore(1000,'\n');
+               continue;
+          }
+          cout<<"Enter the second number: ";
+          cin>>num2;
+          if (cin.fail()){
+               cout<<"Error: Invalid input.";
+               cin.clear();
+               cin.ignore(1000,'\n');
+               continue;
+          }
+          
+          switch(operation){
+               case 1:
+                    add(num1,num2);
+                    break;
+               case 2:
+                    subtract(num1, num2);
+                    break;
+               case 3:
+                    multiply(num1, num2);
+                    break;
+               case 4:
+                    divide(num1, num2);
+                    break;
+               case 5:
+                    modulo(num1, num2);
+                    break;
+               case 6:
+                    exponent(num1, num2);
+                    break;
+               default:
+                    cout<<"Error: Invalid input.";
+                    break;
+          }
+     }
+}
+     
