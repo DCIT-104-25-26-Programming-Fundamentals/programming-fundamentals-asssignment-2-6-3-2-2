@@ -83,3 +83,132 @@
 #include <iomanip>
 using namespace std;
 
+struct Student{
+     string name;
+     string id;
+     vector<int> scores;
+     float average;
+};
+
+void average(vector<Student> students){
+     string id;
+     cout<<"Enter student ID: ";
+     cin>>id;
+     float average;
+     string name;
+     for(Student stud:students){
+          if (stud.id == id){
+               average = stud.average;
+               name = stud.name;
+               break;
+          }
+     }
+     if (name.empty()){
+          cout<<"There is no student with that ID in our database.";
+     }else{
+          cout<<name<<"'s average score: "<<fixed<<setprecision(2)<<average<<endl;
+     }
+}
+     
+void addStudent (vector<Student>& students){
+     string name;
+     string id;
+     int num;
+     
+     cout<<"Student name: ";
+     getline(cin >> ws, name);
+     cout<<"Student ID: ";
+     cin>>id;
+     cout<<"How many scores? ";
+     cin>>num;
+     if (cin.fail()){
+               cout << "Letters are not allowed.\n";
+              cin.clear();
+              cin.ignore(1000, '\n');
+              return;
+     }else if (num<=0){
+          cout<<"At least one score must be entered.";
+          return;
+     }
+     
+     vector<int> scores;
+     int score;
+     for (int i{1}; i<=num;i++){
+          cout<<"Enter score "<<i<<": ";
+          cin>>score;
+          if ((score < 0) || (score > 100)){
+               cout<<"The scores must be between 0 and 100";
+               return;
+          }else if (cin.fail()){
+               cout << "Letters are not allowed.\n";
+              cin.clear();
+              cin.ignore(1000, '\n');
+              return;
+          }
+          scores.push_back(score);
+     }
+     int sum{0};
+     for (int score: scores){
+          sum+=score;
+     }
+     float average{static_cast<float>(sum)/static_cast<float>(scores.size())};
+     students.push_back({name, id, scores, average});
+     cout<<"Student '"<<name<<"' added successfully"<<endl;
+}
+
+void viewStudents(vector<Student>& students){
+     if (students.empty()){
+          cout<<"No students have been entered yet.";
+          return;
+     }
+     cout<<left;
+     cout<<setw(15)<<"Name"
+     <<setw(10)<<"ID"
+     <<setw(20)<<"Scores"
+     <<setw(10)<<"Average"<<endl;
+     
+     for (Student stud: students){
+          string scores;
+          for (int score: stud.scores){
+               scores += (to_string(score) + ", ");
+          }
+          cout<<setw(15)<<stud.name
+          <<setw(10)<<stud.id
+          <<setw(20)<<scores
+          <<setw(10)<<fixed<<setprecision(2)<<stud.average<<endl;
+     }
+}
+void quit(){
+     cout<<"Goodbye!"<<endl;
+}
+
+int main(){
+     cout<<string(40,'-')<<"\nSTUDENT RECORD SYSTEM MENU\n"<<string(40,'-')<<
+     "\n1. Add student\n2. Display all students\n3. Calculate average score\n4. Quit"<<endl;
+     vector<Student> students;
+     while (true){
+          int option;
+          cout<<"\nEnter your choice (1-4): ";
+          cin>>option;
+          if (option == 1){
+               addStudent(students);
+          }else if (option == 2){
+               viewStudents(students);
+          }else if (option == 3){
+               average(students);
+          }else if (option == 4){
+               quit();
+               break;
+          }else if (cin.fail()){
+               cout << "Letters are not allowed.\n";
+              cin.clear();
+              cin.ignore(1000, '\n');
+              continue;
+          }else{
+               cout<<"Error: Invalid input.";
+          }
+          
+     }
+     
+     return 0;
+}
